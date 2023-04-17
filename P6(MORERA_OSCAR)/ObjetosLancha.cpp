@@ -28,10 +28,11 @@ int Lancha::rollDice() {
 	int h = 1 + rand() % (7 - 1);
 	return h;
 }
-//int Lancha::rollEscenario() {
-//	int h = 1 + rand() % (5 - 1);
-//	return h;
-//}
+
+int Lancha::addTurbo() {
+	nitro = 1;
+	return nitro;
+}
 int Lancha::distanceTraveled() {
 	km = km + speed * 100;
 	return km;
@@ -54,14 +55,14 @@ void Lancha::setNameRunner(std::string NnameRunner) {
 }
 
 void Lancha::printInfo() {
-	std::cout << "El nombre del corredor es " << getNameRunner() << ", su velocidad es de " << getSpeed() << ", su distancia recorrida es de " << getDistance() << " y su Nitro es de " << getNitro() << std::endl;
+	std::cout << "Un corredor es " << getNameRunner() << ", tiene una velocidad de " << getSpeed() << ", una distancia recorrida es de " << getDistance() << " y un Nitro de " << getNitro() << std::endl;
 }
 
 void Lancha::addSpeed() {
 	std::cout << "Es el turno del corredor " << getNameRunner() << std::endl;
 	Sleep(1000);
-	Sleep(1000);
 	std::cout << "Lanzas el dado para incrementar tu velocidad." << std::endl;
+	Sleep(1000);
 	std::cout << "El corredor " << getNameRunner() << ", aumenta su velocidad hasta " << increaseSpeed() << std::endl;
 }
 
@@ -71,7 +72,6 @@ void Lancha::printKmTraveled() {
 	Sleep(1000);
 	std::cout << "La distancia del corredor " << getNameRunner() << " es " << distanceTraveled() <<  " km " << std::endl;
 	Sleep(1000);
-	std::cout << "El turno del corredor " << getNameRunner() << " ha acabado" << std::endl;
 }
 
 
@@ -80,7 +80,7 @@ void Lancha::checkTurbo() {
 		askTurbo();
 	}
 	else if (getNitro() == 0) {
-
+		std::cout << "Ya dispones de turbo" << std::endl;
 	}
 }
 void Lancha::askTurbo() {
@@ -100,27 +100,46 @@ void Lancha::askTurbo() {
 			std::cout << "Doblas tu velocidad. Tu velocidad ahora es de " << speed << std::endl;
 			nitro = 0;
 		}
-		std::cout << "Ya no dispondrás de más turbo en toda la carrera" << std::endl;
+		std::cout << "Pierdes el nitro de momento" << std::endl;
 	}
 	else if (option == 2) {
 		std::cout << "Te reservas el turbo." << std::endl;
 	}
 }
+void Lancha::reloadTurbo() {
+	
+	std::cout << "Lanzaras una moneda para probar si recuperas el turbo."<< std::endl;
+	int h = rand() % (2);
+	if (h == 0) {
+		std::cout << "Has sacado cara. No recuperas el turbo" << std::endl;
+	}
+	else if (h == 1) {
+		std::cout << "Has sacado cruz. Recuperas el turbo" << std::endl;
+		addTurbo();
+	}
+}
 
-//void Lancha::setEscenario() {
-//	std::cout << "Tiras un dado para saber que bioma sera donde correras" << std::endl;
-//	rollEscenario();
-//	if (rollEscenario() == 1) {
-//		std::cout << "Te ha tocado el bioma de la jungla. ¡Cuidado con los monos!" << std::endl;
-//	}
-//	else if (rollEscenario() == 2) {
-//		std::cout << "Te ha tocado el bioma del desierto. ¡Cuidado con los cocodrilos!" << std::endl;
-//	}
-//	else if (rollEscenario() == 3) {
-//		std::cout << "Te ha tocado el bioma del pantano. " << std::endl;
-//	}
-//	else if (rollEscenario() == 4) {
-//		std::cout << "Te ha tocado el bioma del rio." << std::endl;
-//	}
-//
-//}
+
+void Lancha::situations() {
+	std::cout << "Dado de la suerte" << std::endl;
+	int p = rand() % 4;
+	if (p == 0) {
+		std::cout << "Se te suman 5 puntos de velocidad" << std::endl;
+		speed = speed + 5;
+	}
+	else if (p == 1) {
+		std::cout << "Te has cruzado con una roca. Tienes que parar a reparar. Tu velocidad se pone en 0" << std::endl;
+		speed = 0;
+	}
+	else if (p == 2) {
+		std::cout << "Te has cruzado con un atajo. Aumentas en 1000 km tu distancia" << std::endl;
+		km = km + 1000;
+	}
+	else if (p == 3) {
+		std:: cout << "Se te restan 2 puntos de velocidad" << std::endl;
+		speed = speed - 2;
+	}
+	
+	std::cout << "El turno del corredor " << getNameRunner() << " ha acabado" << std::endl;
+
+}
