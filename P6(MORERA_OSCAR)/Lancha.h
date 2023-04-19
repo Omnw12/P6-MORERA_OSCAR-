@@ -26,7 +26,7 @@ public:
 
 	int rollDice();
 
-	int addTurbo();
+	//int rollEscenario();
 
 	std::string getNameRunner();
 	
@@ -49,7 +49,6 @@ public:
 
 	void checkTurbo();
 
-	void reloadTurbo();
+	//void setEscenario();
 
-	void situations();
 };
